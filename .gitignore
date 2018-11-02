@@ -1,1 +1,3 @@
 .temp_repos
+node_modules
+output*
