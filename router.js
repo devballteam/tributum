@@ -14,12 +14,23 @@ module.exports = (app) => {
   });
 
   app.get('/login', async (req, res) => {
+    //const html = await readFile('./index.html');
+    res.sendFile(process.cwd() + '/index.html');
   });
 
   app.post('/login', async (req, res) => {
+    console.log('----login post---');
+    if (req.body.login && req.body.login === 'admin' && req.body.password && req.body.password === 'test') {
+      //res.cookie('user', 'tobi', { domain: '.example.com', path: '/admin', secure: true });
+      res.cookie('user', 'tobi', {});
+      res.send('succesfull login');
+    } else {
+      res.sendFile(process.cwd() + '/index.html');
+    }
   });
 
   app.get('/', async (req, res) => {
+    res.send('Main page');
   });
 
   app.post('/', async (req, res) => {
