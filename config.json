@@ -1,10 +1,7 @@
 {
-  "url": "https://github.com/devballteam",
-  "repos": [
-    "prmonitor",
-    "Carpet.js"
-  ],
-  "users": {
-    "marek_bogatzki": ["marek.bogatzki@performgroup.com"]
+  "admin": {
+    "login": "admin",
+    "password": "test",
+    "secret": "test"
   }
 }

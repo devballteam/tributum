@@ -7,12 +7,20 @@ const mail = require('./mailService.js');
 const iterator = require('./iterator.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const sha256 = require("crypto-js/sha256");
+global.admin = require('./config.json').admin;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+function checkCookie (value) {
+  const [hash, timestamp] = value.split('-');
+  const validCookie = `${sha256(admin.login + admin.password + admin.secret + timestamp)}-${timestamp}`;
+
+  return value === validCookie;
+}
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  console.log(req.path);
-  if (req.cookies.user || req.path === '/login') { //TODO is cookie value valid
+  if ((req.cookies.user && checkCookie(req.cookies.user)) ||
+    req.path === '/login') {
     console.log('next');
     next();
   } else {

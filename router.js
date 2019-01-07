@@ -1,5 +1,6 @@
 const fs = require('fs');
 const util = require('util');
+const sha256 = require("crypto-js/sha256");
 const readFile = util.promisify(fs.readFile);
 const iterator = require('./iterator.js');
 
@@ -14,18 +15,18 @@ module.exports = (app) => {
   });
 
   app.get('/login', async (req, res) => {
-    //const html = await readFile('./index.html');
-    res.sendFile(process.cwd() + '/index.html');
+    const loginError = req.query.error ? '<p>Wrong login or password</p>' : '';
+    let html = await readFile('./index.html');
+    res.send(html.toString().replace(/{loginError}/g, loginError));
   });
 
   app.post('/login', async (req, res) => {
-    console.log('----login post---');
-    if (req.body.login && req.body.login === 'admin' && req.body.password && req.body.password === 'test') {
-      //res.cookie('user', 'tobi', { domain: '.example.com', path: '/admin', secure: true });
-      res.cookie('user', 'tobi', {});
-      res.send('succesfull login');
+    if (req.body.login && req.body.login === admin.login && req.body.password && req.body.password === admin.password) {
+      const timestamp = +(new Date());
+      res.cookie('user', `${sha256(req.body.login + req.body.password + admin.secret + timestamp)}-${timestamp}`, { maxAge: 3600000 }); //maxAge 1 hour
+      res.status(200).send();
     } else {
-      res.sendFile(process.cwd() + '/index.html');
+      res.redirect('/login?error=404');
     }
   });
 
@@ -36,7 +37,6 @@ module.exports = (app) => {
   app.post('/', async (req, res) => {
    /**
     * TODO
-    * check permissions
     * check JSON
     * save JSON to config
     * - edit repo lists
