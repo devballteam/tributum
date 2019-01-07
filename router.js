@@ -35,6 +35,14 @@ module.exports = (app) => {
   });
 
   app.post('/', async (req, res) => {
+    let settings = null;
+    try {
+      settings = JSON.parse(req.body.settings);
+
+    } catch (error) {
+      console.log('JSON parse', error);
+    }
+
    /**
     * TODO
     * check JSON
