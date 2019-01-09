@@ -6,11 +6,23 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  {loginError}
+  {message}
+  <div {loginPage}>
   <form action="/login" method="post">
     <input type="text" placeholder="Login" name="login" required>
     <input type="password" placeholder="Password" name="password" required>
     <button type="submit">Login</button>
   </form>
+  </div>
+  <div {mainPage}>
+    <a href="/logout">Logout</a>
+    <form action="/" method="post">
+      <textarea cols="50" rows="30" name="settings">{settings}</textarea>
+      <input type="submit" value="Save">
+    </form>
+    <div>
+      {logs}
+    </div>
+  </div>
 </body>
 </html>
