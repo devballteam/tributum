@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3002;
 const router = require('./router.js');
 const scheduler = require('./scheduler.js');
 const mail = require('./mailService.js');
@@ -16,15 +16,14 @@ function checkCookie (value) {
 
   return value === validCookie;
 }
+app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   if ((req.cookies.user && checkCookie(req.cookies.user)) ||
     req.path === '/login') {
-    console.log('next');
     next();
   } else {
-    console.log('redirect');
     res.redirect('/login');
   }
 });

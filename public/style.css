@@ -1,0 +1,127 @@
+body {
+  background-color: #1C1B19;
+  font-family: sans-serif;
+  font-size: 15px;
+  color: white;
+}
+
+div.login:not([hidden]) {
+  align-items: center;
+  display: grid;
+  height: 100vh;
+  justify-items: center;
+}
+
+.login > form > input {
+  display: block;
+  margin: 5%;
+  font-size: 20px;
+  padding: 10px;
+
+}
+.login > form > input[type="submit"] {
+  color: white;
+  background-color: green;
+  border: 0;
+  font-size: 20px;
+  padding: 5px 10px;
+  margin: 5%;
+}
+
+div.main:not([hidden]) {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 25px auto auto;
+}
+
+.header {
+  grid-column: 2/3;
+  grid-row: 1/2;
+ justify-self: end;
+}
+
+div.config {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  margin: 5px;
+  border-top: 1px dashed gray;
+}
+
+textarea {
+  color: white;
+  background-color: #38352f;
+  border:none;
+  display: block;
+  font-size: 12px;
+
+}
+.main input[type="submit"] {
+  color: white;
+  background-color: #8c8c8c;
+  border: 0;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+.login p {
+  margin: 5%;
+}
+.login p.success {
+  background-color: #d8efcd;
+  color: green;
+  border: 2px solid green;
+  border-radius: 2px;
+  padding: 1%;
+  text-align: center;
+}
+.login p.error {
+  background-color: #fff2ea;
+  color: red;
+  border: 1px solid red;
+  border-radius: 2px;
+  padding: 1%;
+  text-align: center;
+}
+
+.main p {
+  display: inline;
+}
+.main p.success {
+  color: green;
+}
+.main p.error {
+  color: red;
+}
+div.control {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  margin: 5px;
+  border-top: 1px dashed gray;
+}
+
+div.logs {
+  grid-column: 1/3;
+  grid-row: 3/4;
+  margin: 5px;
+  border-top: 1px dashed gray;
+}
+
+.logs textarea {
+  width: 100%;
+}
+header {
+  text-align: center;
+  padding: 5px;
+  color: white;
+}
+
+a.logout {
+  background-color: #8c8c8c;
+  margin: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+}
+
+[hidden] {
+  display: none;
+}

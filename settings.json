@@ -2,7 +2,8 @@
   "url": "https://github.com/devballteam",
   "repos": [
     "prmonitor",
-    "Carpet.js"
+    "Carpet.js",
+    "tokenStorage"
   ],
   "users": {
     "marek_bogatzki": [

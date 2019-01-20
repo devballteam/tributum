@@ -13,15 +13,6 @@ module.exports = (app) => {
     res.redirect('/login');
   });
 
-  app.get('/get', async (req, res) => {
-    const users = (req.query.author || '').split(',');
-    const files = await iterator(users, req.query.month, req.query.year);
-    const file = `${process.cwd()}/${files[0]}`;
-
-    console.log('Done', file);
-    res.download(file);
-  });
-
   app.get('/login', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
     let html = await readFile('./index.html');
@@ -45,10 +36,14 @@ module.exports = (app) => {
   app.get('/', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
     let html = await readFile('./index.html');
+    let configData;
     let config = {};
+    let authorsOptions = '';
 
     try {
-      config = await readFile(settingsFilePath);
+      configData = await readFile(settingsFilePath);
+      config = JSON.parse(configData.toString());
+      authorsOptions = Object.keys(config.users).map(value => `<option value=${value}>${value}</option>`);
     } catch (error) {
       config = JSON.stringify({}, null, 2);
       console.log('No config file');
@@ -58,7 +53,8 @@ module.exports = (app) => {
       .replace(/{message}/g, message)
       .replace(/{loginPage}/g, 'hidden')
       .replace(/{mainPage}/g, '')
-      .replace(/{settings}/g, config)
+      .replace(/{settings}/g, JSON.stringify(config, null, 2))
+      .replace(/{authorsOptions}/g, authorsOptions)
       .replace(/{logs}/g, '')
     );
   });
@@ -73,14 +69,13 @@ module.exports = (app) => {
       console.log('JSON parse', error);
       res.redirect('/?message=Wrong JSON format&type=error');
     }
+  });
 
+  app.post('/report', async (req, res) => {
+    const files = await iterator([req.body.author], req.body.month, req.body.year);
+    const file = `${process.cwd()}/${files[0]}`;
 
-   /**
-    * TODO
-    * save JSON to config
-    * - edit repo lists
-    * - edit users list
-    * - set scheduler
-    */
+    console.log('Done', file);
+    res.download(file);
   });
 };

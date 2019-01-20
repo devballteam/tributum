@@ -1,28 +1,61 @@
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-  {message}
-  <div {loginPage}>
-  <form action="/login" method="post">
-    <input type="text" placeholder="Login" name="login" required>
-    <input type="password" placeholder="Password" name="password" required>
-    <button type="submit">Login</button>
-  </form>
-  </div>
-  <div {mainPage}>
-    <a href="/logout">Logout</a>
-    <form action="/" method="post">
-      <textarea cols="50" rows="30" name="settings">{settings}</textarea>
-      <input type="submit" value="Save">
-    </form>
-    <div>
-      {logs}
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!--- login page -->
+    <div class="login" {loginPage}>
+      <form action="/login" method="post">
+        {message}
+        <input type="text" placeholder="Login" name="login" required>
+        <input type="password" placeholder="Password" name="password" required>
+        <input type="submit" value="Login">
+      </form>
     </div>
-  </div>
-</body>
+
+    <!--- main page -->
+    <div class="main" {mainPage}>
+      <!--- Header section -->
+      <div class="header">
+        <a class="logout" href="/logout">Logout</a>
+      </div>
+
+      <!--- Config section -->
+      <div class="config">
+        <header>Config</header>
+        <form action="/" method="post">
+          <textarea cols="60" rows="33" name="settings">{settings}</textarea>
+          <input type="submit" value="Save">
+          {message}
+        </form>
+      </div>
+      <div class="control">
+        <header>Get report</header>
+        <form action="/report" method="post">
+          <label>Select author:</label>
+          <select name="author">
+            {authorsOptions}
+          </select>
+
+          <div>
+            <label>Month:</label>
+            <input type="text" placeholder="{month}" size="2"name="month" required>
+            <label>Year:</label>
+            <input type="text" placeholder="{year}" size="4" name="year" required>
+          </div>
+          <input type="submit" value="Get">
+        </form>
+      </div>
+
+      <!--- Logs section -->
+      <div class="logs">
+        <header>Logs</header>
+        <textarea cols="150" rows="20" name="logs">{logs}</textarea>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-const config = require('./config.json');
+const config = require('./settings.json');
 const gitService = require('./gitService.js');
 
 module.exports = async (users, month, year) => {

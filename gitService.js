@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const fs = require('fs');
 const execa = require('execa');
-const config = require('./config.json');
+const config = require('./settings.json');
 const tempDir = '.temp_repos';
 
 module.exports = async (month, year, author, output) => {
