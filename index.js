@@ -28,8 +28,10 @@ app.use((req, res, next) => {
   }
 });
 router(app);
-//every first day of month
 /*
+ * TODO add scheduler
+ * '* * * 1 * *' - means run every first day of month
+ *
 scheduler.run('* * * 1 * *', () => {
   iterator();
   const attachments = [{ path: 'package.json' }, { path: 'README.md' }];

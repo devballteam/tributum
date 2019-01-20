@@ -1,20 +1,22 @@
-run:
-npm i
-npm start
-
-open:
-localhost:
-
-
-
+# Tributum
 Save all commits from whole last month for each defined in config file author
 to separate files.
 
-http://localhost:3000/?author=marek_bogatzki&month=11&year=2018
+## Prepare:
+Open config.json file and set up login, password and secret for cookies.
 
+## Setup server:
+```
+npm install
+node index.js (or pm2 start index.js --name tributum)
+```
 
-  ./index.js --to="2018-10"              Save files for each defined authors
-                                         begin of previous month to 2018-10-31.
+## Usage:
+Open http://localhost:3002 and login with credentials from config.json
 
-
-http://localhost:3000/?author=marek_bogatzki&month=11&year=2018
+## TODO
+- [ ] Add scheduler which will automatically send reports.
+- [ ] Add date for placeholder.
+- [ ] Display logs.
+- [ ] Clean up style.css file.
+- [ ] Clean up code.
