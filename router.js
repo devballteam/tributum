@@ -4,6 +4,8 @@ const sha256 = require("crypto-js/sha256");
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const iterator = require('./iterator.js');
+const scheduler = require('./scheduler.js');
+const mail = require('./mailService.js');
 const settingsFilePath = './settings.json';
 
 module.exports = (app) => {
@@ -64,6 +66,29 @@ module.exports = (app) => {
     try {
       settings = JSON.parse(req.body.settings);
       await writeFile(settingsFilePath, JSON.stringify(settings, null, 2));
+
+
+      console.log('------>',settings.schedule);
+      if (settings.schedule && settings.repos.length && settings.targetEmail) {
+        scheduler.cancel();
+        // '* * * 1 * *' - means run every first day of month
+        scheduler.run(settings.schedule, async () => {
+          const date = new Date();
+          const month = date.getMonth() === 0 ? 12 : date.getMonth(); //previous month
+          const year = month === 12 ? today.getFullYear() - 1 : today.getFullYear();
+          const users = Object.keys(settings.users);
+          const files = await iterator(users, month, year);
+          const attachments = files.map(path => ({ path }));
+
+          try {
+            await mail(settings.targetEmail, `Git raport for ${month} ${year}`, attachments);
+            console.log('Success mail sent to', settings.targetEmail);
+          } catch (error) {
+            console.log('Error', error);
+          }
+        });
+      }
+
       res.redirect('/?message=Successful&type=success');
     } catch (error) {
       console.log('JSON parse', error);

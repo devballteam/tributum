@@ -15,7 +15,7 @@ node index.js (or pm2 start index.js --name tributum)
 Open http://localhost:3002 and login with credentials from config.json
 
 ## TODO
-- [ ] Add scheduler which will automatically send reports.
+- [x] Add scheduler which will automatically send reports.
 - [ ] Add date for placeholder.
 - [ ] Display logs.
 - [ ] Clean up style.css file.

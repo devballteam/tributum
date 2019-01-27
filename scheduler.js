@@ -9,7 +9,7 @@ module.exports = {
     });
   },
   cancel: () => {
-    scheduledTask.cancel();
+    scheduledTask && scheduledTask.cancel();
     scheduledTask = undefined;
   }
 };
