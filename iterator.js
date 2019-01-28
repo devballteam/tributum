@@ -1,4 +1,5 @@
 const gitService = require('./gitService.js');
+const config = require('./settings.json');
 
 module.exports = async (users, month, year) => {
   const files = [];

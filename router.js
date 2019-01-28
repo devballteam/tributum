@@ -67,8 +67,6 @@ module.exports = (app) => {
       settings = JSON.parse(req.body.settings);
       await writeFile(settingsFilePath, JSON.stringify(settings, null, 2));
 
-
-      console.log('------>',settings.schedule);
       if (settings.schedule && settings.repos.length && settings.targetEmail) {
         scheduler.cancel();
         // '* * * 1 * *' - means run every first day of month
