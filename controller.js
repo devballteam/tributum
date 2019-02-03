@@ -17,12 +17,8 @@ module.exports = (app) => {
 
   app.get('/login', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
-    let html = await readFile('./index.html');
-    res.send(html.toString()
-      .replace(/{message}/g, message)
-      .replace(/{loginPage}/g, '')
-      .replace(/{mainPage}/g, 'hidden')
-    );
+    let html = await readFile('./public/login.html');
+    res.send(html.toString().replace(/{message}/g, message));
   });
 
   app.post('/login', async (req, res) => {
@@ -37,10 +33,13 @@ module.exports = (app) => {
 
   app.get('/', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
-    let html = await readFile('./index.html');
+    let html = await readFile('./public/index.html');
     let configData;
     let config = {};
     let authorsOptions = '';
+    const date = new Date();
+    const month = date.getMonth() === 0 ? 12 : date.getMonth(); //previous month
+    const year = month === 12 ? date.getFullYear() - 1 : date.getFullYear();
 
     try {
       configData = await readFile(settingsFilePath);
@@ -50,11 +49,12 @@ module.exports = (app) => {
       config = JSON.stringify({}, null, 2);
       console.log('No config file');
     }
+    console.log(message, config);
 
     res.send(html.toString()
+      .replace(/{month}/g, month)
+      .replace(/{year}/g, year)
       .replace(/{message}/g, message)
-      .replace(/{loginPage}/g, 'hidden')
-      .replace(/{mainPage}/g, '')
       .replace(/{settings}/g, JSON.stringify(config, null, 2))
       .replace(/{authorsOptions}/g, authorsOptions)
       .replace(/{logs}/g, '')
@@ -67,13 +67,13 @@ module.exports = (app) => {
       settings = JSON.parse(req.body.settings);
       await writeFile(settingsFilePath, JSON.stringify(settings, null, 2));
 
-      if (settings.schedule && settings.repos.length && settings.targetEmail) {
+      if (settings.schedule && settings.repos.length && settings.targetEmail && false) {
         scheduler.cancel();
         // '* * * 1 * *' - means run every first day of month
         scheduler.run(settings.schedule, async () => {
           const date = new Date();
           const month = date.getMonth() === 0 ? 12 : date.getMonth(); //previous month
-          const year = month === 12 ? today.getFullYear() - 1 : today.getFullYear();
+          const year = month === 12 ? date.getFullYear() - 1 : date.getFullYear();
           const users = Object.keys(settings.users);
           const files = await iterator(users, month, year);
           const attachments = files.map(path => ({ path }));

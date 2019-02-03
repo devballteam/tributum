@@ -1,12 +1,16 @@
 {
+  "targetEmail": "mark.bogatzki@gmail.com",
+  "schedule": "3 * * * *",
   "url": "https://github.com/devballteam",
   "repos": [
-    "prmonitor",
-    "Carpet.js",
-    "tokenStorage"
+    "promonitor",
+    "tributum"
   ],
   "users": {
     "marek_bogatzki": [
+      "marek.bogatzki@performgroup.com"
+    ],
+    "marek_bogatzki22": [
       "marek.bogatzki@performgroup.com"
     ]
   }

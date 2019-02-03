@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3002;
-const router = require('./router.js');
+const controller = require('./controller.js');
+const websocket = require('./websocket.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const sha256 = require("crypto-js/sha256");
@@ -13,7 +15,7 @@ function checkCookie (value) {
 
   return value === validCookie;
 }
-app.use(express.static('public'));
+app.use('/assets', express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
@@ -24,6 +26,7 @@ app.use((req, res, next) => {
     res.redirect('/login');
   }
 });
-router(app);
+controller(app);
+websocket.startWebsocket(port + 100);
 
 app.listen(port, () => console.log(`App started on port ${port}!`));

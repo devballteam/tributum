@@ -16,7 +16,7 @@ Open http://localhost:3002 and login with credentials from config.json
 
 ## TODO
 - [x] Add scheduler which will automatically send reports.
-- [ ] Add date for placeholder.
+- [x] Add date for placeholder.
 - [ ] Display logs.
-- [ ] Clean up style.css file.
+- [x] Clean up style.css file.
 - [ ] Clean up code.

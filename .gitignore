@@ -1,3 +1,4 @@
 .temp_repos
 .temp_output
 node_modules
+settings.json
