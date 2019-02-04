@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const logger = require('./logger');
 
 module.exports = {
   startWebsocket: (port) => {
@@ -15,7 +16,9 @@ module.exports = {
         var i = 0;
         var x = setInterval(() => {
           i++
-        ws.send('something' + i);
+          //console.log(ws);
+          ws && ws.readyState === 1 && ws.send('something' + i);
+          logger('t');
           if (i === 20) {
             clearInterval(x);
           }

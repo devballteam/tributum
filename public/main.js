@@ -1,5 +1,7 @@
 document.querySelector('#logout').addEventListener('click', () => location.href='/logout');
-//document.querySelector('.control form').submit(() => false);
+// Keep textarea on bottom
+const textarea = document.querySelector('textarea[name="logs"]');
+textarea.scrollTop = textarea.scrollHeight;
 
 var ws = new WebSocket("ws://localhost:3102");
 

@@ -46,6 +46,13 @@ body {
   width: 50%;
 }
 
+.msg:after {
+  content: '×';
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}
+
 .msg.success {
   background-color: var(--success-bg);
   color: #fff;
@@ -60,12 +67,17 @@ input {
   background-color: var(--dark-bg);
   border: 1px solid var(--main-font);
   color: var(--input-font);
+  padding: 2px 6px;
 }
 
 textarea {
   background-color: var(--dark-bg);
   border: 1px solid var(--main-font);
+  box-sizing: border-box;
   color: var(--input-font);
+  font: 15px Monospace, sans-serif;
+  resize: vertical;
+  width: 100%;
 }
 
 [type="checkbox"],
@@ -73,10 +85,16 @@ textarea {
   opacity: 0;
 }
 
+label.radio,
+label.checkbox {
+  cursor: pointer;
+}
+
 label.radio:before,
 label.checkbox:before {
   border: 1px solid var(--main-font);
   content: '';
+  cursor: pointer;
   font-size: 12px;
   margin: 0 3px;
   padding: 0 15px 0 0;
@@ -108,8 +126,9 @@ select {
   border-radius: 0;
   border: none;
   color: var(--btn-font);
+  cursor: pointer;
   display: inline-block;
-  font:inherit;
+  font-size: 15px;
   padding: 5px 38px 5px 10px;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='50' fill='%23fff'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
   background-color: var(--accent);
@@ -127,6 +146,10 @@ button {
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
+}
+
+button:not([disabled]) {
+  cursor: pointer;
 }
 
 button:active {

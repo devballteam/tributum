@@ -17,7 +17,7 @@ module.exports = (app) => {
 
   app.get('/login', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
-    let html = await readFile('./public/login.html');
+    let html = await readFile('./views/login.html');
     res.send(html.toString().replace(/{message}/g, message));
   });
 
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
   app.get('/', async (req, res) => {
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
-    let html = await readFile('./public/index.html');
+    let html = await readFile('./views/index.html');
     let configData;
     let config = {};
     let authorsOptions = '';

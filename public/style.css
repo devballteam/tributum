@@ -35,7 +35,6 @@
 .main form > button {
   display: block;
   margin: 5px auto;
-  font-size: 18px;
 }
 
 .config {
@@ -61,7 +60,7 @@
 }
 
 .control input {
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .logs {
