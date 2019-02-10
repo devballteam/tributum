@@ -16,9 +16,9 @@ module.exports = async () => {
   if (settings.targetEmail) {
     try {
       await mail(settings.targetEmail, `Git raport for ${month} ${year}`, attachments);
-      logger('Success mail sent to', settings.targetEmail);
+      logger('Success email sent to', settings.targetEmail);
     } catch (error) {
-      logger('Error', error);
+      logger('Error during sending email', error);
     }
   }
 }
