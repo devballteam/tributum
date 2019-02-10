@@ -1,0 +1,14 @@
+{
+  "targetEmail": "some_email@test.com",
+  "schedule": "*/1 * * * *",
+  "url": "https://github.com/devballteam",
+  "repos": [
+    "promonitor",
+    "tributum"
+  ],
+  "users": {
+    "marek_bogatzki": [
+      "email_used_in_git"
+    ]
+  }
+}
