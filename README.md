@@ -8,15 +8,12 @@ Open config.json file and set up login, password and secret for cookies.
 ## Setup server:
 ```
 npm install
-node index.js (or pm2 start index.js --name tributum)
+node server.js (or pm2 start server.js --name tributum)
 ```
 
 ## Usage:
 Open http://localhost:3002 and login with credentials from config.json
 
 ## TODO
-- [x] Add scheduler which will automatically send reports.
-- [x] Add date for placeholder.
-- [ ] Display logs.
-- [x] Clean up style.css file.
+- [ ] Add possibilty to get report from date range
 - [ ] Clean up code.

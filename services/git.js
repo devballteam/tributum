@@ -1,21 +1,23 @@
 const { exec } = require('child_process');
+const cwd = process.cwd();
 const fs = require('fs');
 const execa = require('execa');
-const config = require('./settings.json');
+const config = require(`${cwd}/settings.json`);
+const logger = require(`${cwd}/helpers/logger`);
 const tempDir = '.temp_repos';
 
 module.exports = async (month, year, author, output) => {
   for (const repo of config.repos) {
-    let repoDir = `${__dirname}/${tempDir}/${repo}`
+    let repoDir = `${cwd}/${tempDir}/${repo}`
 
     if (fs.existsSync(repoDir)) {
-      console.log(`Fetching ${repo}…`);
+      logger(`Fetching ${repo}…`);
       await execa.shell(`git --git-dir=${repoDir}/.git --work-tree=${repoDir}  fetch`);
     } else {
-      console.log(`Cloning ${repo}…`);
+      logger(`Cloning ${repo}…`);
       await execa.shell(`git clone ${config.url}/${repo}.git ${repoDir}`);
     }
-    console.log(`Searching commits of ${author} in ${repo}…`);
+    logger(`Searching commits of ${author} in ${repo}…`);
     await execa.shell(
       `git \
       --git-dir=${repoDir}/.git \

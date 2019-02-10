@@ -1,5 +1,6 @@
-const gitService = require('./gitService.js');
-const config = require('./settings.json');
+const cwd = process.cwd();
+const gitService = require(`${cwd}/services/git.js`);
+const config = require(`${cwd}/settings.json`);
 
 module.exports = async (users, month, year) => {
   const files = [];

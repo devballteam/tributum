@@ -1,20 +1,20 @@
+const cwd = process.cwd();
 const express = require('express');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 3002;
-const controller = require('./controller.js');
-const websocket = require('./websocket.js');
+const wsPort = process.env.WS_PORT || 3102;
+const loginController = require(`${cwd}/controllers/login.js`);
+const mainController = require(`${cwd}/controllers/main.js`);
+const websocket = require(`${cwd}/services/websocket.js`);
+const checkCookie = require(`${cwd}/helpers/checkCookie.js`);
+const scheduler = require(`${cwd}/services/scheduler.js`);
+const getAndSendReports = require(`${cwd}/services/getAndSendReports.js`);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const sha256 = require("crypto-js/sha256");
+const settings = require('./settings.json');
 global.admin = require('./config.json').admin;
 
-function checkCookie (value) {
-  const [hash, timestamp] = value.split('-');
-  const validCookie = `${sha256(admin.login + admin.password + admin.secret + timestamp)}-${timestamp}`;
-
-  return value === validCookie;
-}
 app.use('/assets', express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,7 +26,14 @@ app.use((req, res, next) => {
     res.redirect('/login');
   }
 });
-controller(app);
-websocket.startWebsocket(port + 100);
+
+loginController(app);
+mainController(app);
+
+websocket.startWebsocket(wsPort);
+if (settings.schedule && settings.repos.length && settings.targetEmail) {
+  scheduler.cancel();
+  scheduler.run(settings.schedule, getAndSendReports);
+}
 
 app.listen(port, () => console.log(`App started on port ${port}!`));

@@ -15,7 +15,7 @@
       </div>
 
       <!--- Config section -->
-      <div class="section config">
+      <div class="section config left">
         <div class="section-header">Config</div>
         <div class="section-content">
           <form action="/" method="post">
@@ -26,34 +26,37 @@
         </div>
       </div>
       <!--- Control section -->
-      <div class="section control">
-        <div class="section-header">Get report</div>
-        <div class="section-content">
-          <form>
-            <span>
-              <label>Select author:</label>
-              <select name="author">
-                {authorsOptions}
-              </select>
-            </span>
-            <span>
-              <label>Month:</label>
-              <input type="text" placeholder="{month}" size="2"name="month" required>
-            </span>
-            <span>
-              <label>Year:</label>
-              <input type="text" placeholder="{year}" size="4" name="year" required>
-            </span>
-            <button id="report" disabled>Get report</button>
-          </form>
-          <textarea cols="50" rows="10" name="report" hidden></textarea>
+      <!--- Temporary disabled
+      <div class="right">
+        <div class="section control">
+          <div class="section-header">Get report</div>
+          <div class="section-content">
+            <form>
+              <span>
+                <label>Select author:</label>
+                <select name="author">
+                  {authorsOptions}
+                </select>
+              </span>
+              <span>
+                <label>Month:</label>
+                <input type="text" placeholder="{month}" size="2"name="month" required>
+              </span>
+              <span>
+                <label>Year:</label>
+                <input type="text" placeholder="{year}" size="4" name="year" required>
+              </span>
+              <button id="report" disabled>Get report</button>
+            </form>
+          </div>
         </div>
-      </div>
-      <!--- Logs section -->
-      <div class="section logs">
-        <div class="section-header">Logs</div>
-        <div class="section-content">
-          <textarea cols="100" rows="20" name="logs">{logs}</textarea>
+        //-->
+        <!--- Logs section -->
+        <div class="section logs">
+          <div class="section-header">Logs</div>
+          <div class="section-content">
+            <textarea cols="100" rows="20" name="logs"></textarea>
+          </div>
         </div>
       </div>
     </div>

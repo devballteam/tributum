@@ -2,3 +2,4 @@
 .temp_output
 node_modules
 settings.json
+logs
