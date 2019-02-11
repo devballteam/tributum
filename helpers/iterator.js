@@ -1,4 +1,5 @@
 const cwd = process.cwd();
+const fs = require('fs');
 const gitService = require(`${cwd}/services/git.js`);
 const logger = require(`${cwd}/helpers/logger.js`);
 const mail = require(`${cwd}/services/mail.js`);
@@ -23,13 +24,13 @@ module.exports = async (authors, dates) => {
       // Send mail
       if (settings.targetEmail) {
         try {
-          await mail(settings.targetEmail, `Git raport for ${month} ${year}`, [{ path: output }]);
+          await mail(settings.targetEmail, `${author} Git raport for ${month} ${year}`, [{ path: output }]);
           logger('Success email sent to ' + settings.targetEmail);
         } catch (error) {
           logger('Error during sending email ' + error);
         }
       }
-      // TODO Remove report file
+      fs.unlinkSync(output);
     });
   });
 };
