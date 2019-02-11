@@ -9,7 +9,7 @@ const mainController = require(`${cwd}/controllers/main.js`);
 const websocket = require(`${cwd}/services/websocket.js`);
 const checkCookie = require(`${cwd}/helpers/checkCookie.js`);
 const scheduler = require(`${cwd}/services/scheduler.js`);
-const getAndSendReports = require(`${cwd}/services/getAndSendReports.js`);
+const { getAndSendAllReports } = require(`${cwd}/helpers/utils.js`);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const settings = require('./settings.json');
@@ -33,7 +33,7 @@ mainController(app);
 websocket.startWebsocket(wsPort);
 if (settings.schedule && settings.repos.length && settings.targetEmail) {
   scheduler.cancel();
-  scheduler.run(settings.schedule, getAndSendReports);
+  scheduler.run(settings.schedule, getAndSendAllReports);
 }
 
 app.listen(port, () => console.log(`App started on port ${port}!`));

@@ -1,24 +1,26 @@
-const { exec } = require('child_process');
 const cwd = process.cwd();
 const fs = require('fs');
 const execa = require('execa');
-const config = require(`${cwd}/settings.json`);
+const settings = require(`${cwd}/settings.json`);
 const logger = require(`${cwd}/helpers/logger`);
 const tempDir = '.temp_repos';
 
-module.exports = async (month, year, author, output) => {
-  for (const repo of config.repos) {
+module.exports = {
+  updateRepositories: async (repo) => {
     let repoDir = `${cwd}/${tempDir}/${repo}`
-
     if (fs.existsSync(repoDir)) {
       logger(`Fetching ${repo}…`);
-      await execa.shell(`git --git-dir=${repoDir}/.git --work-tree=${repoDir}  fetch`);
+      return await execa.shell(`git --git-dir=${repoDir}/.git --work-tree=${repoDir}  fetch`);
     } else {
       logger(`Cloning ${repo}…`);
-      await execa.shell(`git clone ${config.url}/${repo}.git ${repoDir}`);
+      return await execa.shell(`git clone ${settings.url}/${repo}.git ${repoDir}`);
     }
+  },
+  getReport: async (reportParams) => {
+    let { author, repo, year, month, output } = reportParams;
+    let repoDir = `${cwd}/${tempDir}/${repo}`
     logger(`Searching commits of ${author} in ${repo}…`);
-    await execa.shell(
+    return await execa.shell(
       `git \
       --git-dir=${repoDir}/.git \
       --work-tree=${repoDir} \
@@ -31,5 +33,5 @@ module.exports = async (month, year, author, output) => {
       --since="${year}-${month}-01" \
       --until="${year}-${month}-31" \
       >> ${output}`);
-  };
-}
+  }
+};
