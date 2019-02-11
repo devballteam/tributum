@@ -4,6 +4,7 @@ const util = require('util');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const logger = require(`${cwd}/helpers/logger.js`);
+const scheduler = require(`${cwd}/services/scheduler.js`);
 const settingsFilePath = `${cwd}/settings.json`;
 const { getAndSendReportsForAuthor, getAndSendAllReports } = require(`${cwd}/helpers/utils.js`);
 
@@ -28,6 +29,7 @@ module.exports = (app) => {
       //.replace(/{month}/g, month)
       //.replace(/{year}/g, year)
       .replace(/{message}/g, message)
+      .replace(/{WS_ADDRESS}/g, req.hostname)
       .replace(/{settings}/g, JSON.stringify(config, null, 2))
       .replace(/{authorsOptions}/g, authorsOptions)
     );
