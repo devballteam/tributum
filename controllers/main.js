@@ -3,13 +3,12 @@ const cwd = process.cwd();
 const util = require('util');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
-const logger = require(`${cwd}/helpers/logger.js`);
-const scheduler = require(`${cwd}/services/scheduler.js`);
 const settingsFilePath = `${cwd}/settings.json`;
-const { getAndSendReportsForAuthor, getAndSendAllReports } = require(`${cwd}/helpers/utils.js`);
+const { reportsForAll, reportsForRange, logger, runSchedule, cancelSchedule } = require(`${cwd}/utils.js`);
 
 module.exports = (app) => {
   app.get('/', async (req, res) => {
+    const date = new Date();
     const message = req.query.message ? `<p class="${req.query.type}">${req.query.message}</p>` : '';
     let html = await readFile('./views/index.html');
     let configData;
@@ -26,8 +25,7 @@ module.exports = (app) => {
     }
 
     res.send(html.toString()
-      //.replace(/{month}/g, month)
-      //.replace(/{year}/g, year)
+      .replace(/{date}/g, `${date.getFullYear()}-${date.getMonth() + 1}`)
       .replace(/{message}/g, message)
       .replace(/{WS_ADDRESS}/g, req.hostname)
       .replace(/{settings}/g, JSON.stringify(config, null, 2))
@@ -44,8 +42,8 @@ module.exports = (app) => {
 
       // Restart scheduler
       if (settings.schedule && settings.repos.length && settings.targetEmail) {
-        scheduler.cancel();
-        scheduler.run(settings.schedule, getAndSendAllReports);
+        cancelSchedule();
+        runSchedule(settings.schedule, reportsForAll);
       }
       res.redirect('/?message=Successful&type=success');
     } catch (error) {
@@ -55,7 +53,7 @@ module.exports = (app) => {
   });
 
   app.post('/report', async (req, res) => {
-    getAndSendReportsForAuthor(req.body.author, req.body.dateFrom, req.body.dateTo);
-    res.status(200);
+    reportsForRange(req.body.author, req.body.dateFrom, req.body.dateTo);
+    res.send();
   });
 };

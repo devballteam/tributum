@@ -14,6 +14,3 @@ node server.js (or pm2 start server.js --name tributum)
 ## Usage:
 Open http://localhost:3002 and login with credentials from config.json
 
-## TODO
-- [ ] Add possibilty to get report from date range
-- [ ] Clean up code.

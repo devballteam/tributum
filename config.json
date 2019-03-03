@@ -1,7 +1,0 @@
-{
-  "admin": {
-    "login": "admin",
-    "password": "test",
-    "secret": "test"
-  }
-}

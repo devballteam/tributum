@@ -29,12 +29,11 @@
         </div>
       </div>
       <!--- Control section -->
-      <!--- Temporary disabled
       <div class="right">
         <div class="section control">
           <div class="section-header">Get report</div>
           <div class="section-content">
-            <form>
+            <form id="reportForm">
               <span>
                 <label>Select author:</label>
                 <select name="author">
@@ -42,18 +41,17 @@
                 </select>
               </span>
               <span>
-                <label>Month:</label>
-                <input type="text" placeholder="{month}" size="2"name="month" required>
+                <label>From:</label>
+                <input type="text" placeholder="{date}" size="7"name="dateFrom" required>
               </span>
               <span>
-                <label>Year:</label>
-                <input type="text" placeholder="{year}" size="4" name="year" required>
+                <label>To:</label>
+                <input type="text" placeholder="{date}" size="7" name="dateTo" required>
               </span>
               <button id="report" disabled>Get report</button>
             </form>
           </div>
         </div>
-        //-->
         <!--- Logs section -->
         <div class="section logs">
           <div class="section-header">Logs</div>

@@ -1,5 +1,4 @@
-.temp_repos
-.temp_output
+.temp
 node_modules
 settings.json
 logs

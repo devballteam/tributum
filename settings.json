@@ -1,12 +1,16 @@
 {
-  "targetEmail": "TARGET_EMAIL",
-  "schedule": "29 * * * *",
+  "admin": {
+    "login": "admin",
+    "password": "test",
+    "secret": "test"
+  },
+  "targetEmail": "EXAMPLE_EMAIL",
+  "schedule": "1 * * * *",
   "url": "git@github.com:",
   "repos": [
-    "devballteam/promonitor",
     "devballteam/tributum"
   ],
   "authors": {
-    "marek_bogatzki": "EMAIL_FROM_GIT"
+    "AUTHOR_NAME": "AUTHOR_EMAIL"
   }
 }
